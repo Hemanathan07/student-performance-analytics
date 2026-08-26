@@ -1,5 +1,6 @@
 import streamlit as st
 import pickle
+import pandas as pd
 import numpy as np
 
 st.title("🎓 Student Placement Predictor")
@@ -14,9 +15,10 @@ average_mark = st.slider("Average Mark", 0, 100, 70)
 study_attendance_score = study_hours * attendance / 100
 
 if st.button("Predict Placement"):
-    import pandas as pd
-    features = pd.DataFrame([[attendance, study_hours, average_mark, study_attendance_score]],
-                             columns=["attendance", "study_hours", "average_mark", "study_attendance_score"])
+    features = pd.DataFrame(
+        [[attendance, study_hours, average_mark, study_attendance_score]],
+        columns=["attendance", "study_hours", "average_mark", "study_attendance_score"]
+    )
     prediction = model.predict(features)[0]
     if prediction == 1:
         st.success("✅ LIKELY TO BE PLACED")
